@@ -8,11 +8,19 @@ import Alerta from './Alerta'
 const Formulario = () => {
 
     const nuevoClienteSchema = Yup.object().shape({
-        nombre: Yup.string().min(3,'El Nombre es muy corto').max(20,'El Nombre es muy largo').required('El Nombre del Cliente es Obligatorio'),
-        empresa: '',
-        email: '',
-        telefono: '',
-        notas: '',
+        nombre: Yup.string()
+                .min(3,'El Nombre es muy corto')
+                .max(20,'El Nombre es muy largo')
+                .required('El Nombre del Cliente es Obligatorio'),
+        empresa: Yup.string()
+                .required('El Nombre de la empresa es Obligatorio'),
+        email: Yup.string()
+                .email('Email no Válido')
+                .required('El Email es Obligatorio'),
+        telefono: Yup.number()
+                .positive('Número no valido')
+                .integer('Número no valido')
+                .typeError('El Número no es válido'),
     })
 
     const handleSubmit = (valores)=>{
@@ -61,6 +69,8 @@ const Formulario = () => {
                         placeholder='Empresa del cliente'
                         name="empresa"
                     />
+                    {errors.empresa && touched.empresa ? 
+                    (<Alerta>{errors.empresa}</Alerta>): null}
                 </div>
 
                 <div className='mb-4'>
@@ -72,6 +82,8 @@ const Formulario = () => {
                         placeholder='Email del cliente'
                         name="email"
                     />
+                    {errors.email && touched.email ? 
+                    (<Alerta>{errors.email}</Alerta>): null}
                 </div>
 
                 <div className='mb-4'>
@@ -83,6 +95,8 @@ const Formulario = () => {
                         placeholder='Teléfono del cliente'
                         name="telefono"
                     />
+                    {errors.telefono && touched.telefono ? 
+                    (<Alerta>{errors.telefono}</Alerta>): null}
                 </div>
 
                 <div className='mb-4'>
